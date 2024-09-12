@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package product;
+
+// Product service definition
+service ProductService {
+  rpc FindProductById (ProductIdRequest) returns (ProductResponse);
+}
+
+// Message for Product ID request
+message ProductIdRequest {
+  string id = 1;
+}
+
+// Message for Product response
+message ProductResponse {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+}
