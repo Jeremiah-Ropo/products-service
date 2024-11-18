@@ -5,11 +5,22 @@ package product;
 // Product service definition
 service ProductService {
   rpc FindProductById (ProductIdRequest) returns (ProductResponse);
+  rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
 }
 
 // Message for Product ID request
 message ProductIdRequest {
   string id = 1;
+}
+
+// Message for creating a product
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+  string ownerId = 4;
+  string ownerName = 5;
+  string ownerEmail = 6;
 }
 
 // Message for Product response

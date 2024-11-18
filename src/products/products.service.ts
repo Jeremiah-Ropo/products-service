@@ -8,14 +8,14 @@ import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectModel(Product.name) private readonly productModel: Model<Product>
-  ){}
+    @InjectModel(Product.name) private readonly productModel: Model<Product>,
+  ) {}
   async create(createProductDto: CreateProductDto) {
     const product = await this.productModel.create(createProductDto);
     return product;
   }
 
-  async findAll(query: any, {limit, page}) {
+  async findAll(query: any, { limit, page }) {
     const products = await this.productModel
       .find(query)
       .limit(limit * 1)
@@ -27,7 +27,7 @@ export class ProductsService {
 
   async findById(id: string) {
     const product = await this.productModel.findById(id);
-    return product;;
+    return product;
   }
 
   async findOne(query: any) {
@@ -43,12 +43,16 @@ export class ProductsService {
   }
 
   async remove(id: string) {
-    const deleteProduct = await this.productModel.findByIdAndDelete(id)
+    const deleteProduct = await this.productModel.findByIdAndDelete(id);
     return deleteProduct;
   }
   async updateProductsByOwner(ownerId, { name, email }) {
     const updatedOnwerDetailsProduct = await this.productModel
-      .findOneAndUpdate({ ownerId }, {ownerName: name, ownerEmail: email}, { new: true })
+      .updateMany(
+        { _id: ownerId },
+        { ownerName: name, ownerEmail: email },
+        { new: true },
+      )
       .exec();
     return updatedOnwerDetailsProduct;
   }

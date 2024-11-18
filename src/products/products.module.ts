@@ -7,7 +7,6 @@ import { Product, ProductSchema } from './schema/product.schema';
 import { OwnerEventConsumer } from '../rabbitmq/owner-event.consumer';
 
 @Module({
-  controllers: [ProductsController],
   imports: [
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
     RabbitMQModule.forRoot(RabbitMQModule, {
@@ -20,6 +19,8 @@ import { OwnerEventConsumer } from '../rabbitmq/owner-event.consumer';
       uri: 'amqp://localhost:5672', // RabbitMQ server URI
     }),
   ],
+  controllers: [ProductsController],
   providers: [ProductsService, OwnerEventConsumer],
+  exports: [ProductsService],
 })
 export class ProductsModule {}
